@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { scanUrl } from "../api";
+import { API_URL, scanUrl } from "../api";
 import { Globe, Search, ArrowRight, ShieldAlert, Sparkles, CheckCircle2, AlertTriangle, Terminal } from "lucide-react";
 
 const SUGGESTIONS = [
@@ -54,7 +54,7 @@ export default function UrlScanner({ initialUrl = "", onScanned, onCustomAudit }
     } catch (err) {
       setError(
         err.message?.includes("Failed to fetch")
-          ? "Unable to reach the privacy engine backend. Ensure server is running on http://localhost:5000."
+          ? `Unable to reach the privacy engine API at ${API_URL}. Please try again shortly.`
           : err.message || "Failed to scan target website."
       );
     } finally {

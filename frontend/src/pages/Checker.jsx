@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { analyzeSite, clientCalculatePrivacyScore } from "../api";
+import { API_URL, analyzeSite, clientCalculatePrivacyScore } from "../api";
 import UrlScanner from "../components/UrlScanner";
 import ScoreGauge from "../components/ScoreGauge";
 import RiskBadge from "../components/RiskBadge";
@@ -184,7 +184,7 @@ export default function Checker({ onAnalyzed, onBack, initialMode = "url", initi
     } catch (err) {
       setError(
         err.message?.includes("Failed to fetch")
-          ? "Could not connect to the backend server at http://localhost:5000."
+          ? `Could not connect to the privacy API at ${API_URL}. Please try again shortly.`
           : err.message || "Failed to analyze permissions."
       );
     } finally {
