@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: digital-privacy-checker-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DB_PATH
+        value: /tmp/privacy_checker.sqlite
+
+  - type: web
+    name: digital-privacy-checker-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: digital-privacy-checker-api
+          property: host
