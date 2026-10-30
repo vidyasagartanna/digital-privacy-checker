@@ -11,6 +11,7 @@ export default function App() {
   const [view, setView] = useState("landing"); // "landing" | "checker" | "dashboard" | "history" | "stats"
   const [result, setResult] = useState(null);
   const [checkerMode, setCheckerMode] = useState("url"); // "url" | "manual"
+  const [initialScanUrl, setInitialScanUrl] = useState("");
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme_preference") || "dark";
   });
@@ -31,12 +32,14 @@ export default function App() {
   }
 
   function handleStartScanUrl(prefilledUrl) {
+    setInitialScanUrl(prefilledUrl || "");
     setCheckerMode("url");
     setView("checker");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function handleStartManualAudit() {
+    setInitialScanUrl("");
     setCheckerMode("manual");
     setView("checker");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -53,7 +56,10 @@ export default function App() {
       <Navbar
         current={view}
         onNavigate={(newView) => {
-          if (newView === "checker") setCheckerMode("url");
+          if (newView === "checker") {
+            setCheckerMode("url");
+            setInitialScanUrl("");
+          }
           setView(newView);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
@@ -72,6 +78,7 @@ export default function App() {
         {view === "checker" && (
           <Checker
             initialMode={checkerMode}
+            initialUrl={initialScanUrl}
             onAnalyzed={handleAnalyzed}
             onBack={() => setView("landing")}
           />

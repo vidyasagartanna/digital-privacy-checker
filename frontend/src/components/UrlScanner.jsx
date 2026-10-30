@@ -19,8 +19,8 @@ const SCAN_STEPS = [
   "Synthesizing privacy score & generating recommendations...",
 ];
 
-export default function UrlScanner({ onScanned, onCustomAudit }) {
-  const [url, setUrl] = useState("");
+export default function UrlScanner({ initialUrl = "", onScanned, onCustomAudit }) {
+  const [url, setUrl] = useState(initialUrl);
   const [loading, setLoading] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [error, setError] = useState(null);

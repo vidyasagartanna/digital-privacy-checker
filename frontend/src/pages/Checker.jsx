@@ -123,7 +123,7 @@ function initCheckboxState(fields) {
   return Object.fromEntries(fields.map((f) => [f.key, false]));
 }
 
-export default function Checker({ onAnalyzed, onBack, initialMode = "url" }) {
+export default function Checker({ onAnalyzed, onBack, initialMode = "url", initialUrl = "" }) {
   const [activeTab, setActiveTab] = useState(initialMode); // "url" | "manual"
   const [siteName, setSiteName] = useState("");
   const [permissions, setPermissions] = useState(initCheckboxState(PERMISSION_CONFIG));
@@ -221,6 +221,7 @@ export default function Checker({ onAnalyzed, onBack, initialMode = "url" }) {
 
       {activeTab === "url" ? (
         <UrlScanner
+          initialUrl={initialUrl}
           onScanned={onAnalyzed}
           onCustomAudit={() => setActiveTab("manual")}
         />
